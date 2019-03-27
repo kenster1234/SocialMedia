@@ -1,0 +1,109 @@
+
+<html>
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    
+    <script>
+        // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAQ5lVFIA1w35DWfoI028Ry0l3EogoMBi0",
+    authDomain: "kenster-9983b.firebaseapp.com",
+    databaseURL: "https://kenster-9983b.firebaseio.com",
+    projectId: "kenster-9983b",
+    storageBucket: "kenster-9983b.appspot.com",
+    messagingSenderId: "844490329847"
+  };
+        firebase.initializeApp(config);
+                
+        // Check to see if you are logged in
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user == null) {
+                alert("Not logged in.");
+                return;
+            } else {
+                userId = user.uid;
+                name = user.displayName;
+                imageUrl = user.photoURL;
+                email = user.email;
+                    
+                // write user data to users
+                writeUserData(userId, name, email, imageUrl);
+                
+                // write data to document
+                mydiv = document.getElementById("mydata");
+                mydiv.innerHTML = name
+                myphotodiv = document.getElementById("myphoto");
+                myphotodiv.innerHTML = "<img src='" + imageUrl + "'/>";
+
+                firebase.database().ref('/').once('value').then(function(snapshot) {
+                    var data = (snapshot.val());
+                    if (data == null) {
+                      console.log("No data found at /tweets");  
+                    } else {
+                      /*
+                      console.log(data); 
+                      var mylist = "<ul>";
+                      for (var u in data) {
+                         console.log(data[u]);
+                         for (var t in data[u]) {
+                            console.log(data[u][t].tweet);
+                            mylist = mylist + "<li>" + data[u][t].tweet + "</li>";
+                         } 
+                      }
+                      mylist = mylist + "</ul>";
+                        console.log(mylist);
+                      var mytdiv = document.getElementById("mytweets");
+                      mytdiv.innerHTML = mylist;
+                      */
+                      updatetweets(data);
+                    }
+                });
+            } // end user null check
+        }); // end check auth state
+        
+        // write user data
+        function writeUserData(userId, name, email, imageUrl) {
+            firebase.database().ref('users/' + userId).set({
+                username: name,
+                email: email,
+                profile_picture : imageUrl
+            });
+        }
+        
+
+        function signin() {
+            console.log("Signing in");
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithRedirect(provider).then(function(result) {  
+            });
+        }
+        
+    </script>
+
+    <body style= "background-image:url('ded.jpg')">
+    <div id ="dis"> 
+        <button onclick="signin()">Sign in</button>
+
+    </div>
+
+    </body>
+<style>
+    
+    #dis {
+        /*border-style: solid;*/
+        border-radius: 20px;
+        background-color: white;
+        height: 400px;
+        width: 500px;
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%, -30%);
+    }
+    
+
+    
+</style>
+    
+</html>
