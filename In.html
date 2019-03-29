@@ -79,16 +79,67 @@
             });
         }
         
+        	if (user != null) {
+                window.location.replace("index.html");
+            }
+        
     </script>
 
     <body style= "background-image:url('ded.jpg')">
     <div id ="dis"> 
-        <button onclick="signin()">Sign in</button>
+        <h1> Sign In </h1>
+        <img src = "bet.jpg" id = "dess" class = "container" onclick ="signin()" >
+        <img src = "ped.png" id = "diss" class = "container" onclick ="signin()" >
+
+        <hr>
+        
+        <button id = "dust"> Sign Out</button>
 
     </div>
 
     </body>
 <style>
+
+    h1{
+        
+        text-align: center;
+    }
+    #dust {
+        
+        border-radius: 20px;
+        background-color: blue;
+        height: 100px;
+        width: 200px;
+        margin-left: 150px;
+        margin-top: 50px;
+        color: white;
+        font-size: 30px;
+    }
+    
+    #diss {
+        
+        height: 80px;
+        width: 200px;
+        border-style: solid;
+        border-radius: 20px;
+        border-color: red;
+        margin-left: 240px;
+       
+    }
+        #dess {
+        
+        height: 80px;
+        width: 200px;
+        border-style: solid;
+        border-radius: 20px;
+        border-color: dimgray;
+        margin-left: 10px;
+        margin-top: 10px;
+       
+    }
+    .container:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
     
     #dis {
         /*border-style: solid;*/
